@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import data from './data.json'; // Replace with the actual path to your JSON file
+// Import Tailwind CSS file if you have a custom one, otherwise it's included globally
+// import './tailwind.css';
 
 function PriceChecker() {
   const [weapon, setWeapon] = useState('');
@@ -30,11 +32,13 @@ function PriceChecker() {
       console.error('Error fetching prices:', error);
     }
   };
+
   return (
-    <div>
-      <form onSubmit={checkPrice}>
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+      <form onSubmit={checkPrice} className="grid grid-cols-1 gap-4">
         {/* Weapon Selection */}
         <select
+          className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           value={weapon}
           onChange={(e) => setWeapon(e.target.value)}
         >
@@ -50,6 +54,7 @@ function PriceChecker() {
         
         {/* Skin Selection based on Weapon */}
         <select
+          className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           value={skin}
           onChange={(e) => setSkin(e.target.value)}
           disabled={!weapon} // Disable until a weapon is selected
@@ -62,6 +67,7 @@ function PriceChecker() {
         
         {/* Wear Dropdown */}
         <select
+          className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           value={wear}
           onChange={(e) => setWear(e.target.value)}
         >
@@ -83,17 +89,22 @@ function PriceChecker() {
           <option value="Souvenir Battle-Scarred">Souvenir Battle-Scarred</option>
         </select>
         
-        <button type="submit">Check Price</button>
+        <button
+          className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
+          type="submit"
+        >
+          Check Price
+        </button>
       </form>
       
       {prices && (
-        <div>
-          <div>URL: {prices.url}</div>
-          <div>Prices:</div>
-          <ul>
+        <div className="mt-6 p-4 bg-gray-50 rounded-md">
+          <div className="text-lg font-semibold">URL: <a href={prices.url} className="text-blue-600 hover:text-blue-800 visited:text-purple-600">{prices.url}</a></div>
+          <div className="mt-2 text-lg font-semibold">Prices:</div>
+          <ul className="list-disc pl-5 mt-2">
             {Object.entries(prices.prices).map(([market, price]) => (
-              <li key={market}>
-                {market}: {price}
+              <li key={market} className="mt-1">
+                <span className="font-semibold">{market}:</span> {price}
               </li>
             ))}
           </ul>
