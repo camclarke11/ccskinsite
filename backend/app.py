@@ -34,8 +34,9 @@ def prices():
     data = request.json
     chosen_weapon = data['weapon'].replace(" ", "-").lower()
     chosen_skin = data['skin'].replace(" ", "-").replace("'", "").lower()
-    chosen_quality = data['quality'].replace(" ", "-").lower()
-    url = f"https://csgoskins.gg/items/{chosen_weapon}-{chosen_skin}/{chosen_quality}"
+    chosen_wear = data['wear'].replace(" ", "-").lower()  # Changed from 'quality' to 'wear'
+    url = f"https://csgoskins.gg/items/{chosen_weapon}-{chosen_skin}/{chosen_wear}"
+    
     
     # Define the marketplaces we are interested in
     markets = ['buff163', 'gamerpay', 'csfloat', 'skinport', 'dmarket', 'steam']
