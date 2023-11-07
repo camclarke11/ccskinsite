@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS:GO Skins Prices</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>CS:GO Skin Price Checker</h1>
+
+<form id="skinForm">
+    <label for="weapon">Weapon:</label>
+    <input type="text" id="weapon" name="weapon" required>
+
+    <label for="skin">Skin:</label>
+    <input type="text" id="skin" name="skin" required>
+
+    <label for="quality">Quality:</label>
+    <input type="text" id="quality" name="quality" required>
+
+    <button type="submit">Get Prices</button>
+</form>
+
+<div id="prices"></div>
+
+<script>
+$(document).ready(function() {
+    $('#skinForm').on('submit', function(e) {
+        e.preventDefault();
+
+        var weapon = $('#weapon').val();
+        var skin = $('#skin').val();
+        var quality = $('#quality').val();
+
+        $.ajax({
+            url: '/prices',
+            type: 'GET',
+            data: {
+                weapon: weapon,
+                skin: skin,
+                quality: quality
+            },
+            success: function(data) {
+                var pricesHTML = '';
+                $.each(data, function(market, price) {
+                    pricesHTML += '<p>' + market + ': ' + price + '</p>';
+                });
+                $('#prices').html(pricesHTML);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
