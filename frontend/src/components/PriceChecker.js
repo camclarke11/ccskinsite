@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import data from './data.json'; // Replace with the actual path to your JSON file
 // Import Tailwind CSS file if you have a custom one, otherwise it's included globally
-// import './tailwind.css';
+
+
 
 function PriceChecker() {
   const [weapon, setWeapon] = useState('');
@@ -38,7 +39,7 @@ function PriceChecker() {
       <form onSubmit={checkPrice} className="grid grid-cols-1 gap-4">
         {/* Weapon Selection */}
         <select
-          className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           value={weapon}
           onChange={(e) => setWeapon(e.target.value)}
         >
@@ -54,7 +55,7 @@ function PriceChecker() {
         
         {/* Skin Selection based on Weapon */}
         <select
-          className="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          className="mt-2 bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           value={skin}
           onChange={(e) => setSkin(e.target.value)}
           disabled={!weapon} // Disable until a weapon is selected
@@ -98,18 +99,26 @@ function PriceChecker() {
       </form>
       
       {prices && (
-        <div className="mt-6 p-4 bg-gray-50 rounded-md">
-          <div className="text-lg font-semibold">URL: <a href={prices.url} className="text-blue-600 hover:text-blue-800 visited:text-purple-600">{prices.url}</a></div>
-          <div className="mt-2 text-lg font-semibold">Prices:</div>
-          <ul className="list-disc pl-5 mt-2">
-            {Object.entries(prices.prices).map(([market, price]) => (
-              <li key={market} className="mt-1">
-                <span className="font-semibold">{market}:</span> {price}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+  <div>
+    <div>URL: {prices.url}</div>
+    <div>Prices:</div>
+    <ul>
+  {Object.entries(prices.prices).map(([market, price]) => (
+    <li key={market} className="flex items-center space-x-2">
+      <img 
+      /* public/{market}.png etc. */
+        src={`${process.env.PUBLIC_URL}/${market}.png`}
+        alt={`${market} logo`} 
+        className="market-logo"
+      />
+      <span>{market}: {price}</span>
+    </li>
+  ))}
+</ul>
+
+  </div>
+)}
+
     </div>
   );
 }
